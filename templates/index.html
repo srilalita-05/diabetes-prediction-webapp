@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diabetes Prediction</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #4e73df, #1cc88a, #36b9cc, #f6c23e);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: white;
+            width: 420px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #4e73df;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 95%;
+            padding: 8px;
+            margin: 6px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 5px #4e73df;
+            outline: none;
+        }
+
+        button {
+            background-color: #4e73df;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #2e59d9;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: gray;
+        }
+
+        /* Floating Circles Animation */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            animation: float 10s infinite;
+        }
+
+        .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            top: 20%;
+        }
+
+        .circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            right: 15%;
+            bottom: 10%;
+            animation-duration: 15s;
+        }
+
+        .circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            left: 70%;
+            top: 10%;
+            animation-duration: 12s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0px); }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+
+    <div class="container">
+        <h2>🩺 Diabetes Prediction</h2>
+        <p>Using AdaBoost Classifier</p>
+
+        <form action="/predict" method="post">
+            <input type="text" name="Pregnancies" placeholder="Pregnancies" required>
+            <input type="text" name="Glucose" placeholder="Glucose Level" required>
+            <input type="text" name="BloodPressure" placeholder="Blood Pressure" required>
+            <input type="text" name="SkinThickness" placeholder="Skin Thickness" required>
+            <input type="text" name="Insulin" placeholder="Insulin Level" required>
+            <input type="text" name="BMI" placeholder="BMI" required>
+            <input type="text" name="DiabetesPedigreeFunction" placeholder="Diabetes Pedigree Function" required>
+            <input type="text" name="Age" placeholder="Age" required>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <div class="result" id="result">
+            {{ prediction_text }}
+        </div>
+
+        <div class="footer">
+            ML Deployment Project | AWS EC2
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            var result = document.getElementById("result");
+            if(result.innerText.trim() !== "") {
+                result.style.opacity = "1";
+            }
+        };
+    </script>
+
+</body>
+</html>
